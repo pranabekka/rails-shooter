@@ -7,9 +7,14 @@ extends Node2D
 #       so it's good to know where they are
 
 
+var player_colour = Color.from_ok_hsl(randf(), 1.0, 0.7)
+
+
 const BULLET_SCENE = preload("res://bullet.tscn")
 
+
 var player = { "speed_multiplier": 1.0 }
+
 
 var laps = {
 	"best": null,
@@ -18,23 +23,21 @@ var laps = {
 }
 
 
-func _ready() -> void:
-	var player_colour = Color.from_ok_hsl(randf(), 1.0, 0.7)
-	
+func _ready() -> void:	
 	%outline.default_color = player_colour
-	%fill.color = player_colour
+	#%fill.color = player_colour
 	
 	# cooldown_bar background
 	var stylebox_bg = %cooldown_bar.get_theme_stylebox("background").duplicate()
 	stylebox_bg.border_color = player_colour
 	%cooldown_bar.add_theme_stylebox_override("background", stylebox_bg)
-	%cooldown_bar2.add_theme_stylebox_override("background", stylebox_bg)
+	#%cooldown_bar2.add_theme_stylebox_override("background", stylebox_bg)
 	
 	# cooldown_bar fill
 	var stylebox_fill = %cooldown_bar.get_theme_stylebox("fill").duplicate()
 	stylebox_fill.bg_color = player_colour
 	%cooldown_bar.add_theme_stylebox_override("fill", stylebox_fill)
-	%cooldown_bar2.add_theme_stylebox_override("fill", stylebox_fill)
+	#%cooldown_bar2.add_theme_stylebox_override("fill", stylebox_fill)
 	
 	%hint_controls.play("default")
 	
@@ -59,7 +62,7 @@ func _process(delta: float) -> void:
 		shoot()
 
 	%cooldown_bar.value = %cooldown_timer.wait_time - %cooldown_timer.time_left
-	%cooldown_bar2.value = %cooldown_timer.wait_time - %cooldown_timer.time_left
+	#%cooldown_bar2.value = %cooldown_timer.wait_time - %cooldown_timer.time_left
 	
 	# TODO: detect laps
 		# - reaching end of lap
@@ -116,14 +119,27 @@ func _on_bullet_area_entered(area: Area2D, bullet):
 
 
 func cooldown_over():
-	# TODO: exaggerate animation further
-	# TODO: animate to x scale 0 and y scale 1.5 or so at the end
-	#       like a portal closing animation
-	var anim_step_duration = .1
-	var tweener = create_tween()
-	tweener.tween_property(%cooldown_bar, "scale", Vector2(1.8, .6), anim_step_duration)
-	tweener.tween_property(%cooldown_bar, "scale", Vector2(.4, 1.7), anim_step_duration)
-	tweener.tween_property(%cooldown_bar, "scale", Vector2(1, 1), anim_step_duration)
+	# TODO: make node2d parent for %outline (line2d)
+	#       so that i can scale relative to a different pivot point
+	#       from the first point in the line2d's curve
+	
+	var hitflash_colour = player_colour.lightened(0.9)
+	
+	var stylebox = %cooldown_bar.get_theme_stylebox("fill").duplicate()
+	%cooldown_bar.add_theme_stylebox_override("fill", stylebox)
+	
+	var stylebox_tweener = create_tween()
+	var outline_tweener = create_tween()
+	var size_tweener = create_tween()
+	
+	stylebox_tweener.tween_property(stylebox, "bg_color", hitflash_colour, 0.1)
+	outline_tweener.tween_property(%outline, "default_color", hitflash_colour, 0.1)
+	size_tweener.tween_property(%outline, "scale", Vector2(1.2, 1.2), 0.1)
+	
+	stylebox_tweener.tween_property(stylebox, "bg_color", player_colour, 0.1)
+	outline_tweener.tween_property(%outline, "default_color", player_colour, 0.1)
+	size_tweener.tween_property(%outline, "scale", Vector2(0.9, 0.9), 0.1)
+
 
 
 func lap_over(area):

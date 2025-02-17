@@ -5,6 +5,12 @@
 [ext_resource type="Texture2D" uid="uid://bpmfeojdh73xj" path="res://anim-controls-frame1.png" id="3_t0f72"]
 [ext_resource type="Texture2D" uid="uid://dvem02ka8sh11" path="res://anim-controls-frame2.png" id="4_qehpu"]
 
+[sub_resource type="Curve2D" id="Curve2D_gecn7"]
+_data = {
+"points": PackedVector2Array(-53, 98.7618, 53, -98.7618, 0, 145, -163, 15, 163, -15, 413, 6, -100, -35.6357, 100, 35.6357, 758, 17, 1, -148.652, -1, 148.652, 1045, 237, 91, 27.4904, -91, -27.4904, 868, 484, 72, 65.1624, -72, -65.1624, 669, 242, 62, -52.9445, -62, 52.9445, 389, 224, 79, 0, -79, 0, 203, 467, -36, 101.816, 36, -101.816, 0, 145)
+}
+point_count = 9
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wcsmq"]
 bg_color = Color(0, 0, 0, 1)
 border_width_left = 2
@@ -12,12 +18,6 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 anti_aliasing = false
-
-[sub_resource type="Curve2D" id="Curve2D_gecn7"]
-_data = {
-"points": PackedVector2Array(-53, 98.7618, 53, -98.7618, 0, 145, -163, 15, 163, -15, 413, 6, -100, -35.6357, 100, 35.6357, 758, 17, 1, -148.652, -1, 148.652, 1045, 237, 91, 27.4904, -91, -27.4904, 868, 484, 72, 65.1624, -72, -65.1624, 669, 242, 62, -52.9445, -62, 52.9445, 389, 224, 79, 0, -79, 0, 203, 467, -36, 101.816, 36, -101.816, 0, 145)
-}
-point_count = 9
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_px5sf"]
 
@@ -46,17 +46,6 @@ animations = [{
 [node name="root" type="Node2D"]
 script = ExtResource("1_ura10")
 
-[node name="cooldown_bar2" type="ProgressBar" parent="."]
-unique_name_in_owner = true
-visible = false
-offset_left = 533.0
-offset_top = 366.0
-offset_right = 732.0
-offset_bottom = 390.0
-theme_override_styles/background = SubResource("StyleBoxFlat_wcsmq")
-max_value = 0.5
-show_percentage = false
-
 [node name="rail" type="Path2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(119.854, 108.355)
@@ -68,25 +57,6 @@ unique_name_in_owner = true
 position = Vector2(0, 145)
 rotation = -1.07826
 
-[node name="cooldown_bar" type="ProgressBar" parent="rail/PathFollow2D"]
-unique_name_in_owner = true
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -17.7803
-offset_top = -39.0931
-offset_right = 17.2197
-offset_bottom = -30.0931
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(18, 5)
-theme_override_styles/background = SubResource("StyleBoxFlat_wcsmq")
-theme_override_styles/fill = SubResource("StyleBoxFlat_px5sf")
-max_value = 0.5
-show_percentage = false
-
 [node name="cooldown_timer" type="Timer" parent="rail/PathFollow2D"]
 unique_name_in_owner = true
 wait_time = 0.5
@@ -95,7 +65,7 @@ one_shot = true
 [node name="outline" type="Line2D" parent="rail/PathFollow2D"]
 unique_name_in_owner = true
 position = Vector2(0, -14)
-scale = Vector2(0.901117, 0.901117)
+scale = Vector2(0.9, 0.9)
 points = PackedVector2Array(19.9752, -7.76814, 0, 39.9504, -20.265, -8.43086, 0, -1.10973)
 closed = true
 width = 3.0
@@ -106,8 +76,30 @@ position = Vector2(0, 45.4991)
 scale = Vector2(1.10973, 1.10973)
 
 [node name="fill" type="Polygon2D" parent="rail/PathFollow2D/outline"]
+show_behind_parent = true
+clip_children = 1
+polygon = PackedVector2Array(19.4883, -7.33243, 0.331116, 38.2122, -20.8204, -8.37073, 0.988998, -1.1832)
+
+[node name="cooldown_bar" type="ProgressBar" parent="rail/PathFollow2D/outline/fill"]
 unique_name_in_owner = true
-polygon = PackedVector2Array(19.4883, -7.33243, 0.331116, 38.2122, -19.3001, -7.92719, -0.0065918, -0.648895)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 1.45983
+offset_top = -2.6953
+offset_right = 61.4598
+offset_bottom = 44.3047
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.57079
+pivot_offset = Vector2(18, 5)
+theme_override_styles/background = SubResource("StyleBoxFlat_wcsmq")
+theme_override_styles/fill = SubResource("StyleBoxFlat_px5sf")
+max_value = 0.5
+value = 0.5
+show_percentage = false
 
 [node name="player_area" type="Area2D" parent="rail/PathFollow2D" groups=["player"]]
 
