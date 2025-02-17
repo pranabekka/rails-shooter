@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4rqg2syjch8b"]
+
+[ext_resource type="Script" path="res://bullet.gd" id="1_qfnuk"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r5c8o"]
+radius = 6.0
+height = 24.0
+
+[node name="bullet" type="Area2D"]
+script = ExtResource("1_qfnuk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_r5c8o")
+
+[node name="outline" type="Line2D" parent="."]
+position = Vector2(-20.773, 0.162506)
+scale = Vector2(0.16916, 0.18105)
+points = PackedVector2Array(103.5, -58.6076, 138, -55.6773, 154.182, -27.1818, 154.182, 43.9091, 135.364, 60.6364, 108.182, 58.5455, 89.3636, 37.6364, 91.4545, -29.2727)
+closed = true
+width = 20.0
+default_color = Color(0.745581, 0.74558, 0.74558, 1)
+
+[node name="visibility_checker" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(1.49012e-07, 0.499999)
+scale = Vector2(0.6, 1.15)
+
+[connection signal="screen_exited" from="visibility_checker" to="." method="_on_visibility_checker_screen_exited"]
