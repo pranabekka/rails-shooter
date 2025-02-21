@@ -71,7 +71,7 @@ func _process(delta: float) -> void:
 		# - test last lap against best and record
 	laps.current += delta
 	var time_display = {}
-	time_display.my_best = "MY BEST: 7.88s | "
+	time_display.my_best = "GOAL: 8.00s | "
 	time_display.best = "BEST: %.2fs | " % laps.best if laps.best else "BEST: ??? | "
 	time_display.last = "LAST: %.2fs | " % laps.last if laps.last else "LAST: ??? | "
 	time_display.current = "CURR: %.2fs" % laps.current
