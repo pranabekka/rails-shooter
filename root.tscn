@@ -111,6 +111,9 @@ position = Vector2(346.854, 275.355)
 rotation = 0.375455
 scale = Vector2(1.2, 1.2)
 script = ExtResource("2_dob0l")
+data_input = "{
+	\"multiplier\": 2, 	\"duration_sec\": 1
+}"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bawx"]
 shape = SubResource("RectangleShape2D_wtak6")
@@ -143,10 +146,9 @@ position = Vector2(676.854, 163.355)
 rotation = -0.288306
 scale = Vector2(1.2, 1.2)
 script = ExtResource("2_dob0l")
-data = {
-"duration_sec": 1.0,
-"multiplier": 3.0
-}
+data_input = "{
+	\"multiplier\": 3, 	\"duration_sec\": 1
+}"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bawx2"]
 shape = SubResource("RectangleShape2D_wtak6")

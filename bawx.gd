@@ -1,10 +1,16 @@
 extends Area2D
 
 
-# TODO: switch dictionary to string and parse as json
 @export_enum("speed_multiplier") var effect: String = "speed_multiplier"
-@export var data: Dictionary = { "multiplier": 2.0, "duration_sec": 1.0 }
+@export_multiline var data_input: String
 
+
+var data: Dictionary
+
+
+func _ready():
+	data = JSON.parse_string(data_input)
+	
 
 func _process(delta):
 	rotation_degrees = rotation_degrees + (1.5 * (data.multiplier - 1))
