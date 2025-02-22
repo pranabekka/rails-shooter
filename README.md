@@ -12,6 +12,9 @@ play on:
 
 decisions:
 
+- single button controls to enable no-network multiplayer
+  on a single input device like a keyboard or touchscreen
+
 - random colours for fun
   and (in the future) different players and levels
   without baking things into files
